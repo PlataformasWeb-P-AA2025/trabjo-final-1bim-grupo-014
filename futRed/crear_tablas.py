@@ -1,7 +1,10 @@
-
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy import Column, Integer, String, ForeignKey
+# traemos la cadena de bd del archivo configuracion.py
 from configuracion import cadena_base_datos
 
-# traemos la cadena de bd del archivo configuracion.py
 engine = create_engine(cadena_base_datos)
 	
 Base = declarative_base()
@@ -10,14 +13,17 @@ Base = declarative_base()
 # La tabla reaccion tiene una conexion con usuario y publicacion
 # los unimos con el nombre de usuario y comentario
 # y se le agrega el campo tipo_emocion
+
+
+
 class Reaccion(Base):
     __tablename__ = 'reaccion'
     usuario_id = Column(Integer, ForeignKey('usuario.id'), primary_key=True)
-    publicacion.id = Column(Integer, ForeignKey('publicacion.id'), primary_key=True)
-    tipo_emocion = Column(String(50), nullable=False)
+    publicacion_id = Column(Integer, ForeignKey('publicacion.id'), primary_key=True)
+    tipo_emocion = Column(String(100), nullable=False)
     usuario = relationship("Usuario", back_populates="comentario")
     comentario = relationship("Publicacion", back_populates="usuario")
-    
+
 
     def __repr__(self):
         return "Reaccion: usuario=%s\n publicacion=%s\n emocion=%s\n"% (
@@ -44,15 +50,17 @@ class Usuario(Base):
 class Publicacion(Base):
     __tablename__ = 'publicacion'
     id = Column(Integer, primary_key=True)
+    usuario_id = Column(Integer, ForeignKey('usuario.id'))
     publicacion = Column(String(500))
+
     usuario = relationship("Reaccion", back_populates="publicacion")
 
     def __repr__(self):
         return "Publicacion: %s"% (
                           self.publicacion)
 
-
-
 Base.metadata.create_all(engine)
 
 
+
+        

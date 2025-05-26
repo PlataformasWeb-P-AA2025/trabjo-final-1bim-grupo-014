@@ -6,6 +6,7 @@
 #
 cadena_base_datos = 'sqlite:///futbol.db' 
 
+
 # Mysql
 # para el uso de este dialecto en SqlAlchemy
 # instalar "pip install PyMySQL"
