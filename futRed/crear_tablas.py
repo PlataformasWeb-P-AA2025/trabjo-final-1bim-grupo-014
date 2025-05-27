@@ -53,7 +53,7 @@ class Publicacion(Base):
     usuario_id = Column(Integer, ForeignKey('usuario.id'))
     publicacion = Column(String(500))
 
-    usuario = relationship("Reaccion", back_populates="publicacion")
+    usuario = relationship("Reaccion", back_populates="comentario")
 
     def __repr__(self):
         return "Publicacion: %s"% (
