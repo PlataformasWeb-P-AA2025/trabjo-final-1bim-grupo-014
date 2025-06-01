@@ -5,10 +5,11 @@ from generador_tablas import engine, Reaccion, Usuario
 Session = sessionmaker(bind=engine)
 session = Session()
 
-# Consulta 5: Reacciones de tipo "alegre", "enojado", "pensativo" de usuarios que NO inicien con vocal
+# Consulta 5: Reacciones de tipo "alegre", "enojado", "pensativo" 
+#de usuarios que NO inicien con vocal
 emociones = ["alegre", "enojado", "pensativo"]
 reacciones_filtradas = (session.query(Reaccion).join(Usuario)
-                                               .filter(Reaccion.tipo_emocion.in_(emociones),Usuario.nombre.op('REGEXP')('^[aeiouAEIOU]'))
+                                               .filter(Reaccion.tipo_emocion.in_(emociones),Usuario.nombre.op('REGEXP')('^[^aeiouAEIOU]'))
                                                .all())
 
 for r in reacciones_filtradas:
