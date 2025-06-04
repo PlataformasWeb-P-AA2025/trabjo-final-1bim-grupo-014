@@ -14,6 +14,10 @@ class Usuario(Base):
     publicaciones = relationship('Publicacion', back_populates='usuario')
     reacciones = relationship('Reaccion', back_populates='usuario')
 
+    def _repr_(self):
+        return "Usuario: %s "% (
+                          self.nombre)
+
 class Publicacion(Base):
     __tablename__ = 'publicaciones'
     id = Column(Integer, primary_key=True)
@@ -22,6 +26,10 @@ class Publicacion(Base):
 
     usuario = relationship('Usuario', back_populates='publicaciones')
     reacciones = relationship('Reaccion', back_populates='publicacion')
+
+    def _repr_(self):
+        return "Publicacion: %s" % (
+            self.publicacion)
 
 class Reaccion(Base):
     __tablename__ = 'reacciones'
@@ -32,6 +40,13 @@ class Reaccion(Base):
 
     usuario = relationship('Usuario', back_populates='reacciones')
     publicacion = relationship('Publicacion', back_populates='reacciones')
+
+    def _repr_(self):
+        return "Reaccion: usuario=%s\n publicacion=%s\n emocion=%s\n" % (
+            self.usuario,
+            self.comentario,
+            self.tipo_emocion)
+
 
     __table_args__ = (
         UniqueConstraint('usuario_id', 'publicacion_id', name='uq_usuario_publicacion'),
