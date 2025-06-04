@@ -9,7 +9,7 @@ session = Session()
 #de usuarios que NO inicien con vocal
 emociones = ["alegre", "enojado", "pensativo"]
 reacciones_filtradas = (session.query(Reaccion).join(Usuario)
-                                               .filter(Reaccion.tipo_emocion.in_(emociones),Usuario.nombre.op('REGEXP')('^[^aeiouAEIOU]'))
+                                               .filter(Reaccion.tipo_emocion.in_(emociones),Usuario.nombre.op('REGEXP')('^[aeiouAEIOU]'))
                                                .all())
 
 for r in reacciones_filtradas:
